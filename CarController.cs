@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using System;
 using System.Collections.Generic;
 
-[System.Serializable] // Crea diferentes ejes. Lo normal es que sean dos pero puede darse el caso de que hayan más
+[System.Serializable] // Crea diferentes ejes. Lo normal es que sean dos pero puede darse el caso de que hayan mÃ¡s
 public class AxleInfo
 {
     public WheelCollider leftWheel;
@@ -36,6 +36,7 @@ public class CarController : MonoBehaviour
     private float wheelTorque = 0;
     private float brakeTorque = 0;
     private float steeringAngle = 0;
+    private float rpm = 0;
     private float speed = 0; // m/s
 
     private float fordward;
@@ -56,6 +57,10 @@ public class CarController : MonoBehaviour
         Inputs();
         PutTorque();
         UpdateAxis();
+
+        rpm = axleInfos[0].leftWheel.rpm;
+
+        //Debug.Log("fordward: " + fordward + " backward: " +  backward + " wheelTorque: " +  wheelTorque + " brakeTorque: " + brakeTorque + " steeringAngle: " + steeringAngle + " rpm: " + rpm + " m/s: " + speed + " Km/h: " + (speed * 3.6));
     }
     
     public void Inputs()
@@ -77,12 +82,12 @@ public class CarController : MonoBehaviour
             wheelTorque = maxWheelTorque * backward * (-1);
             brakeTorque = 0;
         }
-        if (speed > 0)
+        if (rpm > 0)
         {
             wheelTorque = maxWheelTorque * fordward;
             brakeTorque = maxBrakeTorque * backward;
         }
-        else if (speed < 0)
+        else if (rpm < 0)
         {
             wheelTorque = maxWheelTorque * backward * (-1);
             brakeTorque = maxBrakeTorque * fordward;
@@ -108,6 +113,7 @@ public class CarController : MonoBehaviour
                 axleInfo.leftWheel.brakeTorque = brakeTorque;
                 axleInfo.rightWheel.brakeTorque = brakeTorque;
             }
+
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
         }
