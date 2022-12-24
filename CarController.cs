@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using System;
 using System.Collections.Generic;
 
-[System.Serializable] // Crea diferentes ejes. Lo normal es que sean dos pero puede darse el caso de que hayan m√°s
+[System.Serializable] // Crea diferentes ejes. Lo normal es que sean dos pero puede darse el caso de que hayan m·s
 public class AxleInfo
 {
     public WheelCollider leftWheel;
@@ -20,9 +20,6 @@ public class AxleInfo
 }
 public class CarController : MonoBehaviour
 {
-    [Tooltip("Transform of root where is the rigdbody")]
-    public Transform transform;
-
     public PlayerInput playerInput;
 
     private Rigidbody carRigidbody;
@@ -44,7 +41,6 @@ public class CarController : MonoBehaviour
 
     public void Start()
     {
-        transform = GetComponent<Transform>();
         playerInput = GetComponent<PlayerInput>();
         carRigidbody = GetComponent<Rigidbody>();
         carRigidbody.centerOfMass = carRigidbody.centerOfMass + new Vector3(0, -1, 0);
